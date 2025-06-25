@@ -1,7 +1,5 @@
 <?php
 
-use App\Clients\BestBuy;
-
 return [
 
     /*
@@ -39,8 +37,8 @@ return [
 
     'clients' => [
         'bestBuy' => [
-            'key' => env('BEST_BUY_API_KEY')
-        ]
-    ]
+            'key' => env('BEST_BUY_API_KEY'),
+        ],
+    ],
 
 ];
