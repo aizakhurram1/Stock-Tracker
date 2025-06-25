@@ -22,8 +22,8 @@ class TrackCommandTest extends TestCase
 
         Http::fake([
             '*' => Http::response([
-                'available' => true,
-                'price' => 29900,
+                'onlineAvailability' => true,
+                'salePrice' => 299.00,
             ], 200),
         ]);
         // $this->assertFalse($stock->fresh()->in_stock);
