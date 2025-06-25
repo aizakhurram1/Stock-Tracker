@@ -16,7 +16,7 @@ class Stock extends Model
         'in_stock' => 'boolean',
     ];
 
-    public function track()
+    public function track($callback = null)
     {
         $stock_status = $this->retailer->client()->checkAvailability($this);
 
@@ -24,7 +24,11 @@ class Stock extends Model
             'in_stock' => $stock_status->available,
             'price' => $stock_status->price,
         ]);
-        $this->recordHistory();
+
+        $callback && $callback($this);
+
+        $this->product->recordHistory($this);
+        // $this->recordHistory();
 
     }
 
@@ -33,19 +37,10 @@ class Stock extends Model
         return $this->belongsTo(Retailer::class);
     }
 
-    public function histories()
+    public function product()
     {
-        return $this->hasMany(\App\Models\History::class);
-
-    }
-
-    protected function recordHistory()
-    {
-        $this->histories()->create([
-            'price' => $this->price,
-            'in_stock' => $this->in_stock,
-            'product_id' => $this->product_id,
-        ]);
-
+        return $this->belongsTo(Product::class);
     }
 }
+
+// index file to implement http only cookie not using any languages
