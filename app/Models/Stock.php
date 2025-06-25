@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\NowInStock;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,9 @@ class Stock extends Model
     {
         $stock_status = $this->retailer->client()->checkAvailability($this);
 
+        if (! $this->in_stock && $stock_status->available) {
+            event(new NowInStock($this));
+        }
         $this->update([
             'in_stock' => $stock_status->available,
             'price' => $stock_status->price,
@@ -27,8 +31,7 @@ class Stock extends Model
 
         $callback && $callback($this);
 
-        $this->product->recordHistory($this);
-        // $this->recordHistory();
+        // $this->product->recordHistory($this);
 
     }
 

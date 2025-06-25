@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Product;
 use App\Models\Retailer;
 use App\Models\Stock;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class RetailerWithProduct extends Seeder
@@ -24,6 +25,7 @@ class RetailerWithProduct extends Seeder
             'in_stock' => false,
 
         ]);
+        User::factory()->create(['email' => 'jeffery@example.com']);
 
         $best_buy->addStock($switch, $stock);
     }
