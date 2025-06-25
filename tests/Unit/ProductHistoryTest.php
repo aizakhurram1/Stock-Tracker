@@ -35,16 +35,15 @@ class ProductHistoryTest extends TestCase
         $product->track();
 
          $this->assertCount(2, $product->refresh()->histories);
+       
+        $history = $product->histories->first();
 
-        // $history = History::first();
-        // $stock = $product->stock[0];
 
-        // $this->assertNotNull($history, 'No history record found.');
 
-        // $this->assertEquals($stock->price, $history->price);
-        // $this->assertEquals($stock->in_stock, $history->in_stock);
-        // $this->assertEquals($stock->product_id, $history->product_id);
-        // $this->assertEquals($stock->id, $history->stock_id);
+        $this->assertEquals($price, $history->price);
+        $this->assertEquals($available, $history->in_stock);
+        $this->assertEquals($product->id, $history->product_id);
+        $this->assertEquals($product->stock[0]->id, $history->stock_id);
 
     }
 }
